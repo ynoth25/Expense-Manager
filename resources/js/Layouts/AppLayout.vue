@@ -87,10 +87,10 @@
                                 User Management
                             </Link>
                                 <div class="pl-5">
-                                    <Link  :href="route('roles.index')" :class="[route().current('roles.index') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                                    <Link  v-if="hasAnyPermission(['Super user'])" :href="route('roles.index')" :class="[route().current('roles.index') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                                         Roles
                                     </Link>
-                                    <Link  :href="route('users.index')" :class="[route().current('users.index') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                                    <Link  v-if="hasAnyPermission(['Super user'])" :href="route('users.index')" :class="[route().current('users.index') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                                         Users
                                     </Link>
                                 </div>
@@ -172,6 +172,15 @@
                 </div>
             </div>
             <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+                <div class="border-b border-gray-200 px-4 py-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8">
+                    <div class="flex-1 min-w-0">
+
+                    </div>
+                    <div class="mt-4 flex sm:mt-0 sm:ml-4 text-sm text-gray-500">
+                        <p>Welcome to Expense Manager</p>
+                        <a href="#" @click="logout()" class="pl-6"> Log out </a>
+                    </div>
+                </div>
                 <slot></slot>
             </main>
         </div>

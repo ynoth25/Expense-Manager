@@ -66,4 +66,13 @@ class User extends Authenticatable
     public function getAllRoles() {
         return \Spatie\Permission\Models\Role::all();
     }
+
+    // user model function
+    public function getPermissionArray()
+    {
+        return $this->getAllPermissions()->mapWithKeys(function($pr){
+            return [$pr['name'] => true];
+        });
+
+    }
 }

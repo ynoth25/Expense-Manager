@@ -31,8 +31,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     $getExpenseSummaryData = new GetExpenseSummaryData();
-    dd($getExpenseSummaryData->getExpenseSummary());
-    // return Inertia::render('Dashboard');
+    // dd($getExpenseSummaryData->getExpenseSummary());
+    return Inertia::render('Dashboard', [
+        'data' => $getExpenseSummaryData->getExpenseSummary(),
+    ]);
 })->name('dashboard');
 
 Route::resource('roles', RoleController::class);
