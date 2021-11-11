@@ -80,17 +80,17 @@
                     <!-- Navigation -->
                     <nav class="px-3 mt-6">
                         <div class="space-y-1">
-                            <Link  href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                            <Link  href="/dashboard" :class="[route().current('dashboard') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                                 Dashboard
                             </Link>
                             <Link  href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                                 User Management
                             </Link>
                                 <div class="pl-5">
-                                    <Link  :href="route('roles.index')" class="text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                                    <Link  :href="route('roles.index')" :class="[route().current('roles.index') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                                         Roles
                                     </Link>
-                                    <Link  href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                                    <Link  :href="route('users.index')" :class="[route().current('users.index') ? 'bg-gray-200 text-gray-900' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                                         Users
                                     </Link>
                                 </div>

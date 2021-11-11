@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Inertia\Inertia;
 class UserController extends Controller
 {
     /**
@@ -13,9 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = Users::all();
+        $users = User::with('roles')->get();
         return Inertia::render('User/Users', [
-            'preloaded_users' => $users
+            'preloaded_users' => $users,
+            'roles' => Role::with('permissions')->get(),
         ]);
     }
 
@@ -37,7 +41,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = "temporary_password";
+            $user->save();
+
+            //assign role
+            $user->assignRole($request->role);
+            
+            return User::with('roles')->get();
+        } catch(Throwable $e){}
     }
 
     /**
@@ -71,7 +86,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $user = User::findOrFail($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+
+            //Detach all user role then assign new
+            $user->roles()->detach();
+            $user->assignRole($request->role);
+            
+            return User::with('roles')->get();
+        } catch(Throwable $e){}
+
     }
 
     /**
@@ -82,6 +109,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return User::with('roles')->get();
     }
 }

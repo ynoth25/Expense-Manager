@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Inertia\Middleware;
 
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 
 class HandleInertiaRequests extends Middleware
@@ -41,9 +39,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        return array_merge(parent::share($request), [
+        return array_merge(parent::share($request), [ 
             'categories' => Category::all(),
-            'roles' => \Spatie\Permission\Models\Role::with('permissions')->orderBy('name')->get(),
         ]);
     }
 }

@@ -3,7 +3,9 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Actions\Expense\GetExpenseSummaryData;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpenseCategoryController;
 
@@ -28,9 +30,12 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    $getExpenseSummaryData = new GetExpenseSummaryData();
+    dd($getExpenseSummaryData->getExpenseSummary());
+    // return Inertia::render('Dashboard');
 })->name('dashboard');
 
 Route::resource('roles', RoleController::class);
+Route::resource('users', UserController::class);
 Route::resource('categories', ExpenseCategoryController::class);
 Route::resource('expenses', ExpenseController::class);

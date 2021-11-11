@@ -40,7 +40,14 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $role = Role::create(['name' => $request->name]);
+            $permission = Permission::create(['name' => $request->description]);
+            $permission->assignRole($role);
+            return Role::with('permissions')->get();
+        } catch(Throwable $e){
+            return $e.message();
+        }
     }
 
     /**
@@ -72,9 +79,19 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        //
+        try{
+            $role = Role::findOrFail($request->role_id);
+            $role->name = $request->name;
+            $role->save();
+
+            $permission = Permission::findOrFail($request->permission_id);
+            $permission->name = $request->description;
+            $permission->save();
+
+            return Role::with('permissions')->get();
+        } catch(Throwable $e){}
     }
 
     /**
@@ -85,6 +102,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        return Role::with('permissions')->get();
     }
 }
