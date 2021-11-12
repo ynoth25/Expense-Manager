@@ -7,3 +7,4 @@ Used Chart JS and Laravel Spatie for role and permissions
 2. Run composer install command
 3. Run npm install and npm run dev
 4. Run php artisan db:seed --class=AdminUser for default admin user
+5. Default Username: Administrator Password: testpassword
